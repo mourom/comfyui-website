@@ -177,66 +177,10 @@
             margin-top: 20px;
         }
         
-        /* AI 相关资源样式 */
-        .ai-links {
-            background-color: rgba(255, 255, 255, 0.05);
-            padding: 60px;
-            border-radius: 16px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .ai-links:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-        
-        .ai-links h2 {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            color: white;
-        }
-        
-        .ai-links p {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 40px;
-        }
-        
-        .links-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
-        }
-        
-        .link-item {
-            display: block;
-            padding: 20px 24px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-        
-        .link-item:hover {
-            background-color: rgba(102, 126, 234, 0.1);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
-            border-color: rgba(102, 126, 234, 0.5);
-        }
-        
         /* 特色部分样式 */
         .features {
             margin: 120px 0;
+            scroll-margin-top: 200px; /* 增加偏移量，确保内容居中显示 */
         }
         
         .features h2 {
@@ -309,6 +253,64 @@
         .feature-card p {
             color: rgba(255, 255, 255, 0.7);
             line-height: 1.7;
+        }
+        
+        /* AI 相关资源样式 */
+        .ai-links {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 60px;
+            border-radius: 16px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            scroll-margin-top: 200px; /* 增加偏移量，确保内容居中显示 */
+        }
+        
+        .ai-links:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .ai-links h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .ai-links p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+        }
+        
+        .links-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+        
+        .link-item {
+            display: block;
+            padding: 20px 24px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .link-item:hover {
+            background-color: rgba(102, 126, 234, 0.1);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.5);
         }
         
         /* 页脚样式 */
@@ -436,10 +438,10 @@
         <div class="container nav-container">
             <a href="#" class="logo">ComfyUI</a>
             <div class="nav-links">
-                <a href="#home">首页</a>
-                <a href="#features">特色</a>
-                <a href="#contact">联系我们</a>
-                <a href="#resources">AI 资源</a>
+                <a href="#home">首页 / Home</a>
+                <a href="#features">特色 / Features</a>
+                <a href="#contact">联系我们 / Contact</a>
+                <a href="#resources">AI 资源 / AI Resources</a>
             </div>
         </div>
     </nav>
@@ -451,29 +453,33 @@
         <div class="container">
             <h1>ComfyUI</h1>
             <p>欢迎访问 ComfyUI 官方网站，探索 AI 驱动的创意世界</p>
-            <a href="#contact" class="btn">开始探索</a>
+            <p>Welcome to the official ComfyUI website, exploring the AI-driven creative world</p>
+            <a href="#contact" class="btn">开始探索 / Get Started</a>
         </div>
     </header>
     
     <!-- 特色部分 -->
     <section class="features" id="features">
         <div class="container">
-            <h2>AI 驱动的创意工具</h2>
+            <h2>AI 驱动的创意工具 / AI-Driven Creative Tools</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🎨</div>
-                    <h3>智能创作</h3>
+                    <h3>智能创作 / Intelligent Creation</h3>
                     <p>利用先进的 AI 技术，轻松创建高质量的视觉内容，为您的创意项目增添无限可能。</p>
+                    <p>Utilize advanced AI technology to easily create high-quality visual content, adding infinite possibilities to your creative projects.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">⚡</div>
-                    <h3>高效工作流</h3>
+                    <h3>高效工作流 / Efficient Workflow</h3>
                     <p>优化的工作流程设计，让您的创意过程更加流畅，节省时间和精力。</p>
+                    <p>Optimized workflow design makes your creative process more streamlined, saving time and effort.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🚀</div>
-                    <h3>专业效果</h3>
+                    <h3>专业效果 / Professional Results</h3>
                     <p>从概念到成品，一键生成专业级别的视觉效果，满足您的各种创作需求。</p>
+                    <p>From concept to finished product, generate professional-level visual effects with one click to meet all your creative needs.</p>
                 </div>
             </div>
         </div>
@@ -484,17 +490,19 @@
         <div class="container">
             <!-- 联系部分 -->
             <div class="contact" id="contact">
-                <h2>合作联系</h2>
+                <h2>合作联系 / Cooperation Contact</h2>
                 <p>如果您有任何合作意向或问题，请通过以下邮箱联系我们</p>
+                <p>If you have any cooperation intentions or questions, please contact us through the following email</p>
                 <p class="email">Boss@sometab.com</p>
             </div>
             
             <!-- AI 相关资源 -->
             <div class="ai-links" id="resources">
-                <h2>AI 相关资源</h2>
+                <h2>AI 相关资源 / AI Related Resources</h2>
                 <p>以下是一些常见的 AI 相关官网链接，方便您快速访问</p>
+                <p>Here are some common AI-related official website links for your quick access</p>
                 <div class="links-container">
-                    <a href="https://jimeng.jianying.com/" target="_blank" class="link-item">即梦 AI</a>
+                    <a href="https://jimeng.jianying.com/" target="_blank" class="link-item">即梦 AI / Jimeng AI</a>
                     <a href="https://openai.com" target="_blank" class="link-item">OpenAI</a>
                     <a href="https://ai.google" target="_blank" class="link-item">Google AI</a>
                     <a href="https://www.anthropic.com" target="_blank" class="link-item">Anthropic</a>
@@ -513,21 +521,24 @@
                 <div class="footer-section">
                     <h3>ComfyUI</h3>
                     <p>AI 驱动的创意工具，为您的创作提供无限可能。</p>
+                    <p>AI-driven creative tools, providing unlimited possibilities for your creation.</p>
                 </div>
                 <div class="footer-section">
-                    <h3>快速链接</h3>
-                    <a href="#home">首页</a><br>
-                    <a href="#features">特色</a><br>
-                    <a href="#contact">联系我们</a><br>
-                    <a href="#resources">AI 资源</a>
+                    <h3>快速链接 / Quick Links</h3>
+                    <a href="#home">首页 / Home</a><br>
+                    <a href="#features">特色 / Features</a><br>
+                    <a href="#contact">联系我们 / Contact</a><br>
+                    <a href="#resources">AI 资源 / AI Resources</a>
                 </div>
                 <div class="footer-section">
-                    <h3>联系我们</h3>
+                    <h3>联系我们 / Contact Us</h3>
                     <p>邮箱: Boss@sometab.com</p>
+                    <p>Email: Boss@sometab.com</p>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 ComfyUI. 保留所有权利。</p>
+                <p>&copy; 2026 ComfyUI. All rights reserved.</p>
             </div>
         </div>
     </footer>
