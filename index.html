@@ -20,19 +20,20 @@
             overflow-x: hidden;
         }
         
+        /* 容器样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
         /* 彩虹玻璃效果 */
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .rainbow-glass {
             position: relative;
             overflow: hidden;
         }
         
-        .glass-effect::before {
+        .rainbow-glass::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -41,36 +42,79 @@
             height: 200%;
             background: linear-gradient(
                 45deg,
-                transparent,
-                rgba(102, 126, 234, 0.2),
-                transparent,
-                rgba(118, 75, 162, 0.2),
-                transparent
+                rgba(255, 0, 0, 0.1) 0%,
+                rgba(255, 165, 0, 0.1) 16%,
+                rgba(255, 255, 0, 0.1) 33%,
+                rgba(0, 255, 0, 0.1) 50%,
+                rgba(0, 0, 0, 0.1) 67%,
+                rgba(75, 0, 130, 0.1) 83%,
+                rgba(238, 130, 238, 0.1) 100%
             );
-            animation: rainbow-shift 8s linear infinite;
+            background-size: 200% 200%;
+            animation: rainbow-shift 3s linear infinite;
             z-index: -1;
         }
         
         @keyframes rainbow-shift {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
-        .glass-effect:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 255, 255, 0.15);
+        /* 通用玻璃卡片样式 */
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
         
-        /* 容器样式 */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            z-index: 1;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-10px) scale(1.03) rotateX(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 0 0 40px rgba(102, 126, 234, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        
+        .glass-card:hover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 0, 0, 0.05) 0%,
+                rgba(255, 165, 0, 0.05) 20%,
+                rgba(255, 255, 0, 0.05) 40%,
+                rgba(0, 255, 0, 0.05) 60%,
+                rgba(0, 0, 255, 0.05) 80%,
+                rgba(75, 0, 130, 0.05) 100%
+            );
+            background-size: 300% 300%;
+            animation: rainbow-shift 2s ease-in-out infinite;
+            z-index: -1;
+            opacity: 0.8;
+        }
+        
+        .glass-card:hover::after {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
         }
         
         /* 导航栏样式 */
@@ -84,6 +128,11 @@
             z-index: 1000;
             padding: 20px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        nav:hover {
+            border-bottom-color: rgba(255, 255, 255, 0.2);
         }
         
         .nav-container {
@@ -97,6 +146,25 @@
             font-weight: 700;
             color: white;
             text-decoration: none;
+            background: linear-gradient(
+                90deg,
+                #ff6b6b,
+                #4ecdc4,
+                #45b7d1,
+                #96ceb4,
+                #ffeaa7,
+                #dfe6e9,
+                #e17055
+            );
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow-shift 3s linear infinite;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
         }
         
         .nav-links {
@@ -108,11 +176,61 @@
             color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             font-size: 1rem;
-            transition: color 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 8px 16px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            z-index: 1;
         }
         
         .nav-links a:hover {
             color: white;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 0 20px rgba(102, 126, 234, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .nav-links a:hover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 0, 0, 0.05) 0%,
+                rgba(255, 165, 0, 0.05) 20%,
+                rgba(255, 255, 0, 0.05) 40%,
+                rgba(0, 255, 0, 0.05) 60%,
+                rgba(0, 0, 255, 0.05) 80%,
+                rgba(75, 0, 130, 0.05) 100%
+            );
+            background-size: 300% 300%;
+            animation: rainbow-shift 2s ease-in-out infinite;
+            z-index: -1;
+            opacity: 0.8;
+        }
+        
+        .nav-links a:hover::after {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
         }
         
         /* 头部样式 */
@@ -129,8 +247,20 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 50%, rgba(15, 15, 19, 0) 100%);
+            background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.08) 50%, rgba(15, 15, 19, 0) 100%);
             z-index: -1;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
         }
         
         .header-image {
@@ -143,6 +273,11 @@
             object-fit: cover;
             opacity: 0.1;
             z-index: -2;
+            transition: all 0.5s ease;
+        }
+        
+        header:hover .header-image {
+            transform: translate(-50%, -50%) scale(1.05);
         }
         
         header h1 {
@@ -151,6 +286,25 @@
             color: white;
             margin-bottom: 20px;
             letter-spacing: -1px;
+            background: linear-gradient(
+                90deg,
+                #ff6b6b,
+                #4ecdc4,
+                #45b7d1,
+                #96ceb4,
+                #ffeaa7,
+                #dfe6e9,
+                #e17055
+            );
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow-shift 3s linear infinite;
+            transition: all 0.3s ease;
+        }
+        
+        header:hover h1 {
+            transform: scale(1.02);
         }
         
         header p {
@@ -158,24 +312,96 @@
             color: rgba(255, 255, 255, 0.7);
             max-width: 800px;
             margin: 0 auto 40px;
+            transition: all 0.3s ease;
+        }
+        
+        header:hover p {
+            color: rgba(255, 255, 255, 0.9);
         }
         
         .btn {
             display: inline-block;
             padding: 15px 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(25px);
             color: white;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             font-size: 1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 0, 0, 0.05) 0%,
+                rgba(255, 165, 0, 0.05) 20%,
+                rgba(255, 255, 0, 0.05) 40%,
+                rgba(0, 255, 0, 0.05) 60%,
+                rgba(0, 0, 255, 0.05) 80%,
+                rgba(75, 0, 130, 0.05) 100%
+            );
+            background-size: 300% 300%;
+            animation: rainbow-shift 3s ease-in-out infinite;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
         
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            transform: translateY(-8px) scale(1.1) rotateX(5deg);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15), 0 0 30px rgba(102, 126, 234, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(35px);
+        }
+        
+        .btn:hover::before {
+            opacity: 1;
+            animation: rainbow-shift 1.5s ease-in-out infinite;
+        }
+        
+        /* 增强按钮的彩色悬停效果 */
+        .btn:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15), 0 0 30px rgba(102, 126, 234, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        
+        .btn:hover::before {
+            background: linear-gradient(
+                135deg,
+                rgba(255, 0, 0, 0.15) 0%,
+                rgba(255, 165, 0, 0.15) 20%,
+                rgba(255, 255, 0, 0.15) 40%,
+                rgba(0, 255, 0, 0.15) 60%,
+                rgba(0, 0, 255, 0.15) 80%,
+                rgba(75, 0, 130, 0.15) 100%
+            );
+        }
+        
+        .btn:hover::after {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
         }
         
         /* 主内容区样式 */
@@ -188,34 +414,68 @@
             padding: 80px;
             margin: 100px 0;
             text-align: center;
-            scroll-margin-top: 200px; /* 增加偏移量，确保内容居中显示 */
         }
         
         .contact h2 {
             font-size: 2.2rem;
             margin-bottom: 20px;
             color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .contact:hover h2 {
+            transform: translateY(-5px);
+            background: linear-gradient(
+                90deg,
+                #ff6b6b,
+                #4ecdc4,
+                #45b7d1,
+                #96ceb4,
+                #ffeaa7
+            );
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow-shift 3s linear infinite;
         }
         
         .contact p {
             font-size: 1.2rem;
             color: rgba(255, 255, 255, 0.7);
             margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact:hover p {
+            color: rgba(255, 255, 255, 0.9);
         }
         
         .contact p.email {
             font-size: 1.5rem;
             font-weight: 600;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(
+                135deg,
+                #ff6b6b,
+                #4ecdc4,
+                #45b7d1,
+                #96ceb4,
+                #ffeaa7
+            );
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-top: 20px;
+            animation: rainbow-shift 3s linear infinite;
+            transition: all 0.3s ease;
+        }
+        
+        .contact:hover p.email {
+            transform: scale(1.05);
         }
         
         /* 特色部分样式 */
         .features {
             margin: 120px 0;
-            scroll-margin-top: 200px; /* 增加偏移量，确保内容居中显示 */
         }
         
         .features h2 {
@@ -223,6 +483,23 @@
             color: white;
             text-align: center;
             margin-bottom: 80px;
+            transition: all 0.3s ease;
+        }
+        
+        .features:hover h2 {
+            transform: translateY(-5px);
+            background: linear-gradient(
+                90deg,
+                #ff6b6b,
+                #4ecdc4,
+                #45b7d1,
+                #96ceb4,
+                #ffeaa7
+            );
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow-shift 3s linear infinite;
         }
         
         .features-grid {
@@ -233,12 +510,38 @@
         
         .feature-card {
             padding: 40px;
+            text-align: center;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 50%, rgba(15, 15, 19, 0) 100%);
+            z-index: -1;
+            transition: all 0.4s ease;
+        }
+        
+        .feature-card:hover::before {
+            transform: scale(1.2);
+            opacity: 0.2;
         }
         
         .feature-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(
+                135deg,
+                #ff6b6b,
+                #4ecdc4,
+                #45b7d1,
+                #96ceb4,
+                #ffeaa7
+            );
+            background-size: 200% 200%;
             border-radius: 20px;
             display: flex;
             align-items: center;
@@ -246,36 +549,76 @@
             margin: 0 auto 30px;
             font-size: 2rem;
             color: white;
+            animation: rainbow-shift 3s linear infinite;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotateY(360deg);
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
         }
         
         .feature-card h3 {
             font-size: 1.5rem;
             color: white;
             margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover h3 {
+            transform: translateY(-5px);
+            color: rgba(255, 255, 255, 0.95);
         }
         
         .feature-card p {
             color: rgba(255, 255, 255, 0.7);
             line-height: 1.7;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover p {
+            color: rgba(255, 255, 255, 0.9);
+            transform: translateY(5px);
         }
         
         /* AI 相关资源样式 */
         .ai-links {
             padding: 60px;
             text-align: center;
-            scroll-margin-top: 200px; /* 增加偏移量，确保内容居中显示 */
         }
         
         .ai-links h2 {
             font-size: 2.2rem;
             margin-bottom: 20px;
             color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .ai-links:hover h2 {
+            transform: translateY(-5px);
+            background: linear-gradient(
+                90deg,
+                #ff6b6b,
+                #4ecdc4,
+                #45b7d1,
+                #96ceb4,
+                #ffeaa7
+            );
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow-shift 3s linear infinite;
         }
         
         .ai-links p {
             font-size: 1.2rem;
             color: rgba(255, 255, 255, 0.7);
             margin-bottom: 40px;
+            transition: all 0.3s ease;
+        }
+        
+        .ai-links:hover p {
+            color: rgba(255, 255, 255, 0.9);
         }
         
         .links-container {
@@ -288,10 +631,65 @@
         .link-item {
             display: block;
             padding: 20px 24px;
+            background-color: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
             color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
+        
+        .link-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            z-index: 1;
+        }
+        
+        .link-item:hover {
+            color: white;
+            transform: translateY(-8px) scale(1.05) rotateX(5deg);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 0 25px rgba(102, 126, 234, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px);
+        }
+        
+        .link-item:hover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 0, 0, 0.15) 0%,
+                rgba(255, 165, 0, 0.15) 20%,
+                rgba(255, 255, 0, 0.15) 40%,
+                rgba(0, 255, 0, 0.15) 60%,
+                rgba(0, 0, 255, 0.15) 80%,
+                rgba(75, 0, 130, 0.15) 100%
+            );
+            background-size: 300% 300%;
+            animation: rainbow-shift 1.5s ease-in-out infinite;
+            z-index: -1;
+            opacity: 0.8;
+        }
+        
+        .link-item:hover::after {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        }
+
         
         /* 页脚样式 */
         footer {
@@ -549,7 +947,159 @@
                 font-size: 0.75rem;
             }
         }
+        
+        /* 滚动触发动画 */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .scroll-animate.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 鼠标跟随效果 */
+        .mouse-follow {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, rgba(102, 126, 234, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.2s ease-out;
+            mix-blend-mode: screen;
+            backdrop-filter: blur(10px);
+        }
+
+        
+        /* 背景互动效果 */
+        .bg-interactive {
+            position: relative;
+        }
+        
+        .bg-interactive::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(102, 126, 234, 0.1) 0%, rgba(102, 126, 234, 0) 50%);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
     </style>
+    <script>
+        // 滚动触发动画
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll('.scroll-animate');
+            const windowHeight = window.innerHeight;
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                if (elementTop < windowHeight * 0.85) {
+                    element.classList.add('animate');
+                }
+            });
+        }
+        
+        // 鼠标跟随效果
+        function initMouseFollow() {
+            const follow = document.createElement('div');
+            follow.className = 'mouse-follow';
+            document.body.appendChild(follow);
+            
+            document.addEventListener('mousemove', (e) => {
+                follow.style.left = e.clientX - 100 + 'px';
+                follow.style.top = e.clientY - 100 + 'px';
+            });
+            
+            // 添加鼠标移动速度效果
+            let lastX = 0;
+            let lastY = 0;
+            let speed = 0;
+            
+            document.addEventListener('mousemove', (e) => {
+                const currentX = e.clientX;
+                const currentY = e.clientY;
+                
+                // 计算鼠标移动速度
+                speed = Math.sqrt(Math.pow(currentX - lastX, 2) + Math.pow(currentY - lastY, 2)) * 0.1;
+                
+                // 根据速度调整跟随元素的大小
+                const size = 200 + speed * 10;
+                follow.style.width = size + 'px';
+                follow.style.height = size + 'px';
+                follow.style.left = currentX - size/2 + 'px';
+                follow.style.top = currentY - size/2 + 'px';
+                
+                // 根据速度调整透明度
+                const opacity = 0.1 + speed * 0.01;
+                follow.style.opacity = Math.min(opacity, 0.2);
+                
+                lastX = currentX;
+                lastY = currentY;
+            });
+        }
+        
+        // 背景互动效果
+        function initBgInteractive() {
+            const interactiveElements = document.querySelectorAll('.bg-interactive');
+            
+            interactiveElements.forEach(element => {
+                element.addEventListener('mousemove', (e) => {
+                    const rect = element.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    element.style.setProperty('--x', x + '%');
+                    element.style.setProperty('--y', y + '%');
+                });
+            });
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', () => {
+            handleScrollAnimation();
+            initMouseFollow();
+            initBgInteractive();
+        });
+        
+        // 处理锚点跳转，确保内容居中显示
+        function handleAnchorLinks() {
+            const anchorLinks = document.querySelectorAll('a[href^="#"]');
+            
+            anchorLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // 计算导航栏高度
+                        const navHeight = document.querySelector('nav').offsetHeight;
+                        // 计算目标位置，考虑导航栏高度和额外的偏移量
+                        const targetPosition = targetElement.offsetTop - navHeight - 100;
+                        
+                        // 平滑滚动到目标位置
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+        
+        // 滚动时触发动画
+        window.addEventListener('scroll', handleScrollAnimation);
+        
+        // 初始化锚点链接处理
+        window.addEventListener('DOMContentLoaded', handleAnchorLinks);
+    </script>
 </head>
 <body>
     <!-- 导航栏 -->
@@ -578,23 +1128,23 @@
     </header>
     
     <!-- 特色部分 -->
-    <section class="features" id="features">
+    <section class="features bg-interactive" id="features">
         <div class="container">
-            <h2>AI 驱动的创意工具 / AI-Driven Creative Tools</h2>
+            <h2 class="scroll-animate">AI 驱动的创意工具 / AI-Driven Creative Tools</h2>
             <div class="features-grid">
-                <div class="feature-card glass-effect">
+                <div class="feature-card glass-card scroll-animate">
                     <div class="feature-icon">🎨</div>
                     <h3>智能创作 / Intelligent Creation</h3>
                     <p>利用先进的 AI 技术，轻松创建高质量的视觉内容，为您的创意项目增添无限可能。</p>
                     <p>Utilize advanced AI technology to easily create high-quality visual content, adding infinite possibilities to your creative projects.</p>
                 </div>
-                <div class="feature-card glass-effect">
+                <div class="feature-card glass-card scroll-animate" style="transition-delay: 0.2s;">
                     <div class="feature-icon">⚡</div>
                     <h3>高效工作流 / Efficient Workflow</h3>
                     <p>优化的工作流程设计，让您的创意过程更加流畅，节省时间和精力。</p>
                     <p>Optimized workflow design makes your creative process more streamlined, saving time and effort.</p>
                 </div>
-                <div class="feature-card glass-effect">
+                <div class="feature-card glass-card scroll-animate" style="transition-delay: 0.4s;">
                     <div class="feature-icon">🚀</div>
                     <h3>专业效果 / Professional Results</h3>
                     <p>从概念到成品，一键生成专业级别的视觉效果，满足您的各种创作需求。</p>
@@ -608,7 +1158,7 @@
     <div class="main-content">
         <div class="container">
             <!-- 联系部分 -->
-            <div class="contact glass-effect" id="contact">
+            <div class="contact glass-card scroll-animate bg-interactive" id="contact">
                 <h2>合作联系 / Cooperation Contact</h2>
                 <p>如果您有任何合作意向或问题，请通过以下邮箱联系我们</p>
                 <p>If you have any cooperation intentions or questions, please contact us through the following email</p>
@@ -616,46 +1166,46 @@
             </div>
             
             <!-- AI 相关资源 -->
-            <div class="ai-links glass-effect" id="resources">
+            <div class="ai-links glass-card scroll-animate bg-interactive" id="resources">
                 <h2>AI 相关资源 / AI Related Resources</h2>
                 <p>以下是一些常见的 AI 相关官网链接，方便您快速访问</p>
                 <p>Here are some common AI-related official website links for your quick access</p>
                 <div class="links-container">
-                    <a href="https://jimeng.jianying.com/" target="_blank" class="link-item glass-effect">即梦 AI / Jimeng AI</a>
-                    <a href="https://openai.com" target="_blank" class="link-item glass-effect">OpenAI</a>
-                    <a href="https://ai.google" target="_blank" class="link-item glass-effect">Google AI</a>
-                    <a href="https://www.anthropic.com" target="_blank" class="link-item glass-effect">Anthropic</a>
-                    <a href="https://comfy.org" target="_blank" class="link-item glass-effect">Comfy</a>
-                    <a href="https://tapnow.ai" target="_blank" class="link-item glass-effect">TapNow</a>
-                    <a href="https://lovart.ai" target="_blank" class="link-item glass-effect">Lovart AI</a>
+                    <a href="https://jimeng.jianying.com/" target="_blank" class="link-item scroll-animate">即梦 AI / Jimeng AI</a>
+                    <a href="https://openai.com" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.1s;">OpenAI</a>
+                    <a href="https://ai.google" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.2s;">Google AI</a>
+                    <a href="https://www.anthropic.com" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.3s;">Anthropic</a>
+                    <a href="https://comfy.org" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.4s;">Comfy</a>
+                    <a href="https://tapnow.ai" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.5s;">TapNow</a>
+                    <a href="https://lovart.ai" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.6s;">Lovart AI</a>
                 </div>
             </div>
         </div>
     </div>
     
     <!-- 页脚 -->
-    <footer>
+    <footer class="scroll-animate">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
+                <div class="footer-section scroll-animate">
                     <h3>ComfyUI</h3>
                     <p>AI 驱动的创意工具，为您的创作提供无限可能。</p>
                     <p>AI-driven creative tools, providing unlimited possibilities for your creation.</p>
                 </div>
-                <div class="footer-section">
+                <div class="footer-section scroll-animate" style="transition-delay: 0.2s;">
                     <h3>快速链接 / Quick Links</h3>
                     <a href="#home">首页 / Home</a><br>
                     <a href="#features">特色 / Features</a><br>
                     <a href="#contact">联系我们 / Contact</a><br>
                     <a href="#resources">AI 资源 / AI Resources</a>
                 </div>
-                <div class="footer-section">
+                <div class="footer-section scroll-animate" style="transition-delay: 0.4s;">
                     <h3>联系我们 / Contact Us</h3>
                     <p>邮箱: Boss@sometab.com</p>
                     <p>Email: Boss@sometab.com</p>
                 </div>
             </div>
-            <div class="footer-bottom">
+            <div class="footer-bottom scroll-animate" style="transition-delay: 0.6s;">
                 <p>&copy; 2026 ComfyUI. 保留所有权利。</p>
                 <p>&copy; 2026 ComfyUI. All rights reserved.</p>
             </div>
