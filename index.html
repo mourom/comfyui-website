@@ -20,6 +20,52 @@
             overflow-x: hidden;
         }
         
+        /* 彩虹玻璃效果 */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-effect::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(102, 126, 234, 0.2),
+                transparent,
+                rgba(118, 75, 162, 0.2),
+                transparent
+            );
+            animation: rainbow-shift 8s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes rainbow-shift {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .glass-effect:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
         /* 容器样式 */
         .container {
             max-width: 1200px;
@@ -139,21 +185,10 @@
         
         /* 联系部分样式 */
         .contact {
-            background-color: rgba(255, 255, 255, 0.05);
             padding: 80px;
-            border-radius: 16px;
             margin: 100px 0;
             text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
             scroll-margin-top: 200px; /* 增加偏移量，确保内容居中显示 */
-        }
-        
-        .contact:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 255, 255, 0.15);
         }
         
         .contact h2 {
@@ -197,38 +232,7 @@
         }
         
         .feature-card {
-            background-color: rgba(255, 255, 255, 0.05);
             padding: 40px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 50%, rgba(15, 15, 19, 0) 100%);
-            z-index: -1;
-            transition: all 0.3s ease;
-        }
-        
-        .feature-card:hover::before {
-            transform: scale(1.1);
-            opacity: 0.15;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 255, 255, 0.15);
         }
         
         .feature-icon {
@@ -257,20 +261,9 @@
         
         /* AI 相关资源样式 */
         .ai-links {
-            background-color: rgba(255, 255, 255, 0.05);
             padding: 60px;
-            border-radius: 16px;
             text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
             scroll-margin-top: 200px; /* 增加偏移量，确保内容居中显示 */
-        }
-        
-        .ai-links:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 255, 255, 0.15);
         }
         
         .ai-links h2 {
@@ -295,22 +288,9 @@
         .link-item {
             display: block;
             padding: 20px 24px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
             color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-        
-        .link-item:hover {
-            background-color: rgba(102, 126, 234, 0.1);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
-            border-color: rgba(102, 126, 234, 0.5);
         }
         
         /* 页脚样式 */
@@ -602,19 +582,19 @@
         <div class="container">
             <h2>AI 驱动的创意工具 / AI-Driven Creative Tools</h2>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card glass-effect">
                     <div class="feature-icon">🎨</div>
                     <h3>智能创作 / Intelligent Creation</h3>
                     <p>利用先进的 AI 技术，轻松创建高质量的视觉内容，为您的创意项目增添无限可能。</p>
                     <p>Utilize advanced AI technology to easily create high-quality visual content, adding infinite possibilities to your creative projects.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card glass-effect">
                     <div class="feature-icon">⚡</div>
                     <h3>高效工作流 / Efficient Workflow</h3>
                     <p>优化的工作流程设计，让您的创意过程更加流畅，节省时间和精力。</p>
                     <p>Optimized workflow design makes your creative process more streamlined, saving time and effort.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card glass-effect">
                     <div class="feature-icon">🚀</div>
                     <h3>专业效果 / Professional Results</h3>
                     <p>从概念到成品，一键生成专业级别的视觉效果，满足您的各种创作需求。</p>
@@ -628,7 +608,7 @@
     <div class="main-content">
         <div class="container">
             <!-- 联系部分 -->
-            <div class="contact" id="contact">
+            <div class="contact glass-effect" id="contact">
                 <h2>合作联系 / Cooperation Contact</h2>
                 <p>如果您有任何合作意向或问题，请通过以下邮箱联系我们</p>
                 <p>If you have any cooperation intentions or questions, please contact us through the following email</p>
@@ -636,18 +616,18 @@
             </div>
             
             <!-- AI 相关资源 -->
-            <div class="ai-links" id="resources">
+            <div class="ai-links glass-effect" id="resources">
                 <h2>AI 相关资源 / AI Related Resources</h2>
                 <p>以下是一些常见的 AI 相关官网链接，方便您快速访问</p>
                 <p>Here are some common AI-related official website links for your quick access</p>
                 <div class="links-container">
-                    <a href="https://jimeng.jianying.com/" target="_blank" class="link-item">即梦 AI / Jimeng AI</a>
-                    <a href="https://openai.com" target="_blank" class="link-item">OpenAI</a>
-                    <a href="https://ai.google" target="_blank" class="link-item">Google AI</a>
-                    <a href="https://www.anthropic.com" target="_blank" class="link-item">Anthropic</a>
-                    <a href="https://comfy.org" target="_blank" class="link-item">Comfy</a>
-                    <a href="https://tapnow.ai" target="_blank" class="link-item">TapNow</a>
-                    <a href="https://lovart.ai" target="_blank" class="link-item">Lovart AI</a>
+                    <a href="https://jimeng.jianying.com/" target="_blank" class="link-item glass-effect">即梦 AI / Jimeng AI</a>
+                    <a href="https://openai.com" target="_blank" class="link-item glass-effect">OpenAI</a>
+                    <a href="https://ai.google" target="_blank" class="link-item glass-effect">Google AI</a>
+                    <a href="https://www.anthropic.com" target="_blank" class="link-item glass-effect">Anthropic</a>
+                    <a href="https://comfy.org" target="_blank" class="link-item glass-effect">Comfy</a>
+                    <a href="https://tapnow.ai" target="_blank" class="link-item glass-effect">TapNow</a>
+                    <a href="https://lovart.ai" target="_blank" class="link-item glass-effect">Lovart AI</a>
                 </div>
             </div>
         </div>
