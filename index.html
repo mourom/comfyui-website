@@ -87,6 +87,58 @@
             margin-top: 10px;
         }
         
+        /* AI 相关资源样式 */
+        .ai-links {
+            background-color: #f8f9fa;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .ai-links:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ai-links h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #4a4a4a;
+        }
+        
+        .ai-links p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .links-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .link-item {
+            display: block;
+            padding: 15px 20px;
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .link-item:hover {
+            background-color: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(102, 126, 234, 0.3);
+        }
+        
         /* 页脚样式 */
         footer {
             background-color: #333;
@@ -115,8 +167,13 @@
                 padding: 40px 20px;
             }
             
-            .contact {
+            .contact,
+            .ai-links {
                 padding: 30px 20px;
+            }
+            
+            .links-container {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -129,7 +186,8 @@
                 font-size: 1rem;
             }
             
-            .contact h2 {
+            .contact h2,
+            .ai-links h2 {
                 font-size: 1.4rem;
             }
         }
@@ -147,6 +205,19 @@
                 <h2>合作联系</h2>
                 <p>如果您有任何合作意向或问题，请通过以下邮箱联系我们</p>
                 <p class="email">Boss@sometab.com</p>
+            </div>
+            
+            <div class="ai-links">
+                <h2>AI 相关资源</h2>
+                <p>以下是一些常见的 AI 相关官网链接，方便您快速访问</p>
+                <div class="links-container">
+                    <a href="https://openai.com" target="_blank" class="link-item">OpenAI</a>
+                    <a href="https://ai.google" target="_blank" class="link-item">Google AI</a>
+                    <a href="https://azure.microsoft.com/en-us/products/ai-services" target="_blank" class="link-item">Microsoft Azure AI</a>
+                    <a href="https://www.anthropic.com" target="_blank" class="link-item">Anthropic</a>
+                    <a href="https://deepmind.google" target="_blank" class="link-item">DeepMind</a>
+                    <a href="https://www.meta.ai" target="_blank" class="link-item">Meta AI</a>
+                </div>
             </div>
         </div>
         
