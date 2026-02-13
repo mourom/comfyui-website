@@ -44,6 +44,11 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
         
+        header h1 span {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        
         header p {
             font-size: 1.2rem;
             opacity: 0.9;
@@ -132,6 +137,10 @@
                 font-size: 2.2rem;
             }
             
+            header h1 span {
+                font-size: 1.6rem;
+            }
+            
             .main-content {
                 padding: 40px 20px;
             }
@@ -145,6 +154,10 @@
         @media (max-width: 480px) {
             header h1 {
                 font-size: 1.8rem;
+            }
+            
+            header h1 span {
+                font-size: 1.4rem;
             }
             
             header p {
@@ -161,8 +174,12 @@
 <body>
     <div class="container">
         <header>
-            <h1>ComfyUI - 康绘UI</h1>
-            <p>欢迎访问 ComfyUI (康绘UI) 官方网站</p>
+            <h1>
+                ComfyUI
+                <br>
+                <span>康绘UI</span>
+            </h1>
+            <p>欢迎访问 ComfyUI 康绘UI 官方网站</p>
         </header>
         
         <div class="main-content">
@@ -179,7 +196,7 @@
         </div>
         
         <footer>
-            <p>&copy; 2026 ComfyUI - 康绘UI. 保留所有权利。</p>
+            <p>&copy; 2026 ComfyUI 康绘UI. 保留所有权利。</p>
         </footer>
     </div>
 </body>
