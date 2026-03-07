@@ -3,89 +3,1120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ComfyUI - AI 创意平台</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#6366f1',
-                        secondary: '#8b5cf6',
-                        accent: '#ec4899',
-                        dark: '#1e293b',
-                        light: '#f8fafc'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                }
+    <title>ComfyUI</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #0f0f13;
+            overflow-x: hidden;
+        }
+        
+        /* 容器样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 彩虹玻璃效果 */
+        .rainbow-glass {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .rainbow-glass::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 0, 0, 0.1) 0%,
+                rgba(255, 165, 0, 0.1) 16%,
+                rgba(255, 255, 0, 0.1) 33%,
+                rgba(0, 255, 0, 0.1) 50%,
+                rgba(0, 0, 255, 0.1) 67%,
+                rgba(75, 0, 130, 0.1) 83%,
+                rgba(238, 130, 238, 0.1) 100%
+            );
+            background-size: 200% 200%;
+            animation: rainbow-shift 3s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes rainbow-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* 通用玻璃卡片样式 */
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            z-index: 1;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-10px) scale(1.03) rotateX(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 0 0 40px rgba(102, 126, 234, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        
+        .glass-card:hover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 0, 0, 0.05) 0%,
+                rgba(255, 165, 0, 0.05) 20%,
+                rgba(255, 255, 0, 0.05) 40%,
+                rgba(0, 255, 0, 0.05) 60%,
+                rgba(0, 0, 255, 0.05) 80%,
+                rgba(75, 0, 130, 0.05) 100%
+            );
+            background-size: 300% 300%;
+            animation: rainbow-shift 2s ease-in-out infinite;
+            z-index: -1;
+            opacity: 0.8;
+        }
+        
+        .glass-card:hover::after {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        }
+        
+        /* 导航栏样式 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(15, 15, 19, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        nav:hover {
+            border-bottom-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            background: linear-gradient(
+                90deg,
+                #ff6b6b,
+                #4ecdc4,
+                #45b7d1,
+                #96ceb4,
+                #ffeaa7,
+                #dfe6e9,
+                #e17055
+            );
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow-shift 3s linear infinite;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 8px 16px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            z-index: 1;
+        }
+        
+        .nav-links a:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 0 20px rgba(102, 126, 234, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .nav-links a:hover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 0, 0, 0.05) 0%,
+                rgba(255, 165, 0, 0.05) 20%,
+                rgba(255, 255, 0, 0.05) 40%,
+                rgba(0, 255, 0, 0.05) 60%,
+                rgba(0, 0, 255, 0.05) 80%,
+                rgba(75, 0, 130, 0.05) 100%
+            );
+            background-size: 300% 300%;
+            animation: rainbow-shift 2s ease-in-out infinite;
+            z-index: -1;
+            opacity: 0.8;
+        }
+        
+        .nav-links a:hover::after {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        }
+        
+        /* 头部样式 */
+        header {
+            padding: 200px 0 150px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.08) 50%, rgba(15, 15, 19, 0) 100%);
+            z-index: -1;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
             }
         }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
+        
+        .header-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            object-fit: cover;
+            opacity: 0.1;
+            z-index: -2;
+            transition: all 0.5s ease;
+        }
+        
+        header:hover .header-image {
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+        
+        header h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            background: linear-gradient(
+                90deg,
+                #ff6b6b,
+                #4ecdc4,
+                #45b7d1,
+                #96ceb4,
+                #ffeaa7,
+                #dfe6e9,
+                #e17055
+            );
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow-shift 3s linear infinite;
+            transition: all 0.3s ease;
+        }
+        
+        header:hover h1 {
+            transform: scale(1.02);
+        }
+        
+        header p {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            transition: all 0.3s ease;
+        }
+        
+        header:hover p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(25px);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 0, 0, 0.05) 0%,
+                rgba(255, 165, 0, 0.05) 20%,
+                rgba(255, 255, 0, 0.05) 40%,
+                rgba(0, 255, 0, 0.05) 60%,
+                rgba(0, 0, 255, 0.05) 80%,
+                rgba(75, 0, 130, 0.05) 100%
+            );
+            background-size: 300% 300%;
+            animation: rainbow-shift 3s ease-in-out infinite;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-8px) scale(1.1) rotateX(5deg);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15), 0 0 30px rgba(102, 126, 234, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(35px);
+        }
+        
+        .btn:hover::before {
+            opacity: 1;
+            animation: rainbow-shift 1.5s ease-in-out infinite;
+        }
+        
+        /* 增强按钮的彩色悬停效果 */
+        .btn:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15), 0 0 30px rgba(102, 126, 234, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        
+        .btn:hover::before {
+            background: linear-gradient(
+                135deg,
+                rgba(255, 0, 0, 0.15) 0%,
+                rgba(255, 165, 0, 0.15) 20%,
+                rgba(255, 255, 0, 0.15) 40%,
+                rgba(0, 255, 0, 0.15) 60%,
+                rgba(0, 0, 255, 0.15) 80%,
+                rgba(75, 0, 130, 0.15) 100%
+            );
+        }
+        
+        .btn:hover::after {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        }
+        
+        /* 主内容区样式 */
+        .main-content {
+            padding: 100px 0;
+        }
+        
+        /* 联系部分样式 */
+        .contact {
+            padding: 80px;
+            margin: 100px 0;
+            text-align: center;
+        }
+        
+        .contact h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .contact:hover h2 {
+            transform: translateY(-5px);
+            background: linear-gradient(
+                90deg,
+                #ff6b6b,
+                #4ecdc4,
+                #45b7d1,
+                #96ceb4,
+                #ffeaa7
+            );
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow-shift 3s linear infinite;
+        }
+        
+        .contact p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact:hover p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .contact p.email {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(
+                135deg,
+                #ff6b6b,
+                #4ecdc4,
+                #45b7d1,
+                #96ceb4,
+                #ffeaa7
+            );
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-top: 20px;
+            animation: rainbow-shift 3s linear infinite;
+            transition: all 0.3s ease;
+        }
+        
+        .contact:hover p.email {
+            transform: scale(1.05);
+        }
+        
+        /* 特色部分样式 */
+        .features {
+            margin: 120px 0;
+        }
+        
+        .features h2 {
+            font-size: 2.5rem;
+            color: white;
+            text-align: center;
+            margin-bottom: 80px;
+            transition: all 0.3s ease;
+        }
+        
+        .features:hover h2 {
+            transform: translateY(-5px);
+            background: linear-gradient(
+                90deg,
+                #ff6b6b,
+                #4ecdc4,
+                #45b7d1,
+                #96ceb4,
+                #ffeaa7
+            );
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow-shift 3s linear infinite;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 50%, rgba(15, 15, 19, 0) 100%);
+            z-index: -1;
+            transition: all 0.4s ease;
+        }
+        
+        .feature-card:hover::before {
+            transform: scale(1.2);
+            opacity: 0.2;
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(
+                135deg,
+                #ff6b6b,
+                #4ecdc4,
+                #45b7d1,
+                #96ceb4,
+                #ffeaa7
+            );
+            background-size: 200% 200%;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 2rem;
+            color: white;
+            animation: rainbow-shift 3s linear infinite;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotateY(360deg);
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover h3 {
+            transform: translateY(-5px);
+            color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover p {
+            color: rgba(255, 255, 255, 0.9);
+            transform: translateY(5px);
+        }
+        
+        /* AI 相关资源样式 */
+        .ai-links {
+            padding: 60px;
+            text-align: center;
+        }
+        
+        .ai-links h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .ai-links:hover h2 {
+            transform: translateY(-5px);
+            background: linear-gradient(
+                90deg,
+                #ff6b6b,
+                #4ecdc4,
+                #45b7d1,
+                #96ceb4,
+                #ffeaa7
+            );
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow-shift 3s linear infinite;
+        }
+        
+        .ai-links p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+            transition: all 0.3s ease;
+        }
+        
+        .ai-links:hover p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .links-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+        
+        .link-item {
+            display: block;
+            padding: 20px 24px;
+            background-color: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .link-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            z-index: 1;
+        }
+        
+        .link-item:hover {
+            color: white;
+            transform: translateY(-8px) scale(1.05) rotateX(5deg);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 0 25px rgba(102, 126, 234, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px);
+        }
+        
+        .link-item:hover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 0, 0, 0.15) 0%,
+                rgba(255, 165, 0, 0.15) 20%,
+                rgba(255, 255, 0, 0.15) 40%,
+                rgba(0, 255, 0, 0.15) 60%,
+                rgba(0, 0, 255, 0.15) 80%,
+                rgba(75, 0, 130, 0.15) 100%
+            );
+            background-size: 300% 300%;
+            animation: rainbow-shift 1.5s ease-in-out infinite;
+            z-index: -1;
+            opacity: 0.8;
+        }
+        
+        .link-item:hover::after {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        }
+        
+
+        
+        /* 页脚样式 */
+        footer {
+            background-color: rgba(10, 10, 14, 0.8);
+            padding: 80px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 120px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-section h3 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            line-height: 1.7;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            header h1 {
+                font-size: 3.5rem;
             }
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-            .text-shadow-lg {
-                text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 0;
             }
-            .bg-gradient-custom {
-                background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
             }
-            .glass-card {
-                backdrop-filter: blur(10px);
-                background-color: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.2);
+            
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
-            .scroll-animate {
-                opacity: 0;
-                transform: translateY(20px);
-                transition: all 0.6s ease-out;
+            
+            .nav-links a {
+                font-size: 0.9rem;
             }
-            .scroll-animate.active {
-                opacity: 1;
-                transform: translateY(0);
+            
+            header {
+                padding: 180px 0 120px;
             }
+            
+            header h1 {
+                font-size: 2.8rem;
+            }
+            
+            header p {
+                font-size: 1.2rem;
+                line-height: 1.5;
+            }
+            
+            .main-content {
+                padding: 80px 0;
+            }
+            
+            .contact,
+            .ai-links {
+                padding: 40px 30px;
+            }
+            
+            .contact h2,
+            .ai-links h2 {
+                font-size: 1.8rem;
+                line-height: 1.3;
+            }
+            
+            .features h2 {
+                font-size: 2rem;
+                line-height: 1.3;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-card h3 {
+                font-size: 1.3rem;
+            }
+            
+            .feature-card p {
+                font-size: 0.95rem;
+            }
+            
+            .links-container {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .link-item {
+                padding: 16px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .footer-content {
+                gap: 40px;
+            }
+            
+            .footer-section h3 {
+                font-size: 1.1rem;
+            }
+            
+            .footer-section p,
+            .footer-section a {
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav {
+                padding: 12px 0;
+            }
+            
+            .nav-container {
+                gap: 12px;
+            }
+            
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-links a {
+                font-size: 0.8rem;
+                white-space: nowrap;
+            }
+            
+            header {
+                padding: 160px 0 100px;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+                width: 100%;
+                max-width: 200px;
+                text-align: center;
+            }
+            
+            .main-content {
+                padding: 60px 0;
+            }
+            
+            .contact,
+            .ai-links {
+                padding: 30px 20px;
+            }
+            
+            .contact h2,
+            .ai-links h2 {
+                font-size: 1.5rem;
+            }
+            
+            .features h2 {
+                font-size: 1.8rem;
+            }
+            
+            .feature-card {
+                padding: 30px 20px;
+            }
+            
+            .feature-card h3 {
+                font-size: 1.2rem;
+            }
+            
+            .feature-card p {
+                font-size: 0.9rem;
+                line-height: 1.6;
+            }
+            
+            .link-item {
+                padding: 14px 18px;
+                font-size: 0.85rem;
+            }
+            
+            .footer-content {
+                gap: 30px;
+            }
+            
+            .footer-section {
+                text-align: center;
+            }
+            
+            .footer-bottom {
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            header p {
+                font-size: 0.9rem;
+            }
+            
+            .contact h2,
+            .ai-links h2 {
+                font-size: 1.3rem;
+            }
+            
+            .features h2 {
+                font-size: 1.5rem;
+            }
+            
+            .feature-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .nav-links {
+                gap: 8px;
+            }
+            
+            .nav-links a {
+                font-size: 0.75rem;
+            }
+        }
+        
+        /* 滚动触发动画 */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .scroll-animate.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 鼠标跟随效果 */
+        .mouse-follow {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, rgba(102, 126, 234, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.2s ease-out;
+            mix-blend-mode: screen;
+            backdrop-filter: blur(10px);
+        }
+        
+
+        
+        /* 背景互动效果 */
+        .bg-interactive {
+            position: relative;
+        }
+        
+        .bg-interactive::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(102, 126, 234, 0.1) 0%, rgba(102, 126, 234, 0) 50%);
+            transition: all 0.3s ease;
+            z-index: -1;
         }
     </style>
+    <script>
+        // 滚动触发动画
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll('.scroll-animate');
+            const windowHeight = window.innerHeight;
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                if (elementTop < windowHeight * 0.85) {
+                    element.classList.add('animate');
+                }
+            });
+        }
+        
+        // 鼠标跟随效果
+        function initMouseFollow() {
+            const follow = document.createElement('div');
+            follow.className = 'mouse-follow';
+            document.body.appendChild(follow);
+            
+            document.addEventListener('mousemove', (e) => {
+                follow.style.left = e.clientX - 100 + 'px';
+                follow.style.top = e.clientY - 100 + 'px';
+            });
+            
+            // 添加鼠标移动速度效果
+            let lastX = 0;
+            let lastY = 0;
+            let speed = 0;
+            
+            document.addEventListener('mousemove', (e) => {
+                const currentX = e.clientX;
+                const currentY = e.clientY;
+                
+                // 计算鼠标移动速度
+                speed = Math.sqrt(Math.pow(currentX - lastX, 2) + Math.pow(currentY - lastY, 2)) * 0.1;
+                
+                // 根据速度调整跟随元素的大小
+                const size = 200 + speed * 10;
+                follow.style.width = size + 'px';
+                follow.style.height = size + 'px';
+                follow.style.left = currentX - size/2 + 'px';
+                follow.style.top = currentY - size/2 + 'px';
+                
+                // 根据速度调整透明度
+                const opacity = 0.1 + speed * 0.01;
+                follow.style.opacity = Math.min(opacity, 0.2);
+                
+                lastX = currentX;
+                lastY = currentY;
+            });
+        }
+        
+        // 背景互动效果
+        function initBgInteractive() {
+            const interactiveElements = document.querySelectorAll('.bg-interactive');
+            
+            interactiveElements.forEach(element => {
+                element.addEventListener('mousemove', (e) => {
+                    const rect = element.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    element.style.setProperty('--x', x + '%');
+                    element.style.setProperty('--y', y + '%');
+                });
+            });
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', () => {
+            handleScrollAnimation();
+            initMouseFollow();
+            initBgInteractive();
+        });
+        
+        // 处理锚点跳转，确保内容居中显示
+        function handleAnchorLinks() {
+            const anchorLinks = document.querySelectorAll('a[href^="#"]');
+            
+            anchorLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // 计算导航栏高度
+                        const navHeight = document.querySelector('nav').offsetHeight;
+                        // 计算目标位置，考虑导航栏高度和额外的偏移量
+                        const targetPosition = targetElement.offsetTop - navHeight - 100;
+                        
+                        // 平滑滚动到目标位置
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+        
+        // 滚动时触发动画
+        window.addEventListener('scroll', handleScrollAnimation);
+        
+        // 初始化锚点链接处理
+        window.addEventListener('DOMContentLoaded', handleAnchorLinks);
+    </script>
 </head>
-<body class="bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900 min-h-screen text-light">
+<body>
     <!-- 导航栏 -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-dark/80 backdrop-blur-md border-b border-white/10">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-primary flex items-center">
-                <span class="mr-2">🧠</span>
-                <span>ComfyUI</span>
-            </a>
-            <div class="hidden md:flex space-x-8">
-                <a href="#home" class="hover:text-primary transition-colors">首页</a>
-                <a href="#features" class="hover:text-primary transition-colors">特色</a>
-                <a href="#ecosystem" class="hover:text-primary transition-colors">生态</a>
-                <a href="#gallery" class="hover:text-primary transition-colors">作品展示</a>
-                <a href="#contact" class="hover:text-primary transition-colors">联系我们</a>
-            </div>
-            <button class="md:hidden text-2xl" id="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-        <!-- 移动端菜单 -->
-        <div class="md:hidden hidden bg-dark/95 border-b border-white/10" id="mobile-menu">
-            <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
-                <a href="#home" class="hover:text-primary transition-colors py-2">首页</a>
-                <a href="#features" class="hover:text-primary transition-colors py-2">特色</a>
-                <a href="#ecosystem" class="hover:text-primary transition-colors py-2">生态</a>
-                <a href="#gallery" class="hover:text-primary transition-colors py-2">作品展示</a>
-                <a href="#contact" class="hover:text-primary transition-colors py-2">联系我们</a>
+    <nav>
+        <div class="container nav-container">
+            <a href="#" class="logo">ComfyUI</a>
+            <div class="nav-links">
+                <a href="#home">首页 / Home</a>
+                <a href="#features">社区生态门户 / Community Portal</a>
+                <a href="#contact">联系我们 / Contact</a>
+                <a href="#resources">AI 资源 / AI Resources</a>
             </div>
         </div>
     </nav>
-
+    
     <!-- 头部 -->
     <header id="home">
         <div class="header-bg"></div>
@@ -106,200 +1137,81 @@
                 <div class="feature-card glass-card scroll-animate">
                     <div class="feature-icon">🌐</div>
                     <h3>资源聚合平台 / Resource Aggregation Platform</h3>
-                    <p>整合 ComfyUI 相关的各类资源，包括模型、插件、教程等，为用户提供一站式的资源获取渠道。</p>
+                    <p>整合各类 AI 资源和工具，为用户提供一站式的资源获取和管理体验。</p>
+                    <p>Integrate various AI resources and tools to provide users with a one-stop resource acquisition and management experience.</p>
                 </div>
-                <div class="feature-card glass-card scroll-animate">
+                <div class="feature-card glass-card scroll-animate" style="transition-delay: 0.2s;">
+                    <div class="feature-icon">🤝</div>
+                    <h3>社区交流中心 / Community Exchange Center</h3>
+                    <p>搭建开发者和用户之间的桥梁，促进知识分享和技术交流，共同推动生态发展。</p>
+                    <p>Build a bridge between developers and users, promote knowledge sharing and technical exchanges, and jointly promote ecological development.</p>
+                </div>
+                <div class="feature-card glass-card scroll-animate" style="transition-delay: 0.4s;">
                     <div class="feature-icon">🚀</div>
-                    <h3>版本管理工具 / Version Management Tool</h3>
-                    <p>提供 ComfyUI 及其插件的版本管理功能，帮助用户轻松切换不同版本，测试新特性。</p>
-                </div>
-                <div class="feature-card glass-card scroll-animate">
-                    <div class="feature-icon">📱</div>
-                    <h3>移动端访问 / Mobile Access</h3>
-                    <p>支持移动端访问和管理，让用户随时随地都能使用 ComfyUI 进行创作和管理。</p>
-                </div>
-                <div class="feature-card glass-card scroll-animate">
-                    <div class="feature-icon">🛠️</div>
-                    <h3>模型管理 / Model Management</h3>
-                    <p>集中管理各类 AI 模型，支持模型的上传、下载、预览和使用，方便用户快速找到所需模型。</p>
-                </div>
-                <div class="feature-card glass-card scroll-animate">
-                    <div class="feature-icon">🔌</div>
-                    <h3>插件系统 / Plugin System</h3>
-                    <p>提供插件的安装、更新和管理功能，扩展 ComfyUI 的功能，满足用户的个性化需求。</p>
-                </div>
-                <div class="feature-card glass-card scroll-animate">
-                    <div class="feature-icon">📚</div>
-                    <h3>教程中心 / Tutorial Center</h3>
-                    <p>提供详细的教程和文档，帮助用户快速上手 ComfyUI，掌握高级技巧。</p>
+                    <h3>生态赋能平台 / Ecosystem Empowerment Platform</h3>
+                    <p>为开发者提供工具和支持，为用户提供丰富的应用场景，构建繁荣的 AI 生态系统。</p>
+                    <p>Provide tools and support for developers, rich application scenarios for users, and build a prosperous AI ecosystem.</p>
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- 生态系统 -->
-    <section class="ecosystem" id="ecosystem">
+    <!-- 主内容区 -->
+    <div class="main-content">
         <div class="container">
-            <h2 class="scroll-animate">生态系统 / Ecosystem</h2>
-            <div class="ecosystem-content">
-                <div class="ecosystem-card glass-card scroll-animate">
-                    <h3>🔗 社区连接</h3>
-                    <p>连接 ComfyUI 社区，分享作品、交流经验，共同推动 AI 创作的发展。</p>
-                </div>
-                <div class="ecosystem-card glass-card scroll-animate">
-                    <h3>🔧 工具集成</h3>
-                    <p>集成各种 AI 创作工具，提供统一的操作界面，简化创作流程。</p>
-                </div>
-                <div class="ecosystem-card glass-card scroll-animate">
-                    <h3>📈 资源管理</h3>
-                    <p>高效管理模型、插件等资源，优化存储和使用体验。</p>
+            <!-- 联系部分 -->
+            <div class="contact glass-card scroll-animate bg-interactive" id="contact">
+                <h2>合作联系 / Cooperation Contact</h2>
+                <p>如果您有任何合作意向或问题，请通过以下邮箱联系我们</p>
+                <p>If you have any cooperation intentions or questions, please contact us through the following email</p>
+                <p class="email">Boss@sometab.com</p>
+            </div>
+            
+            <!-- AI 相关资源 -->
+            <div class="ai-links glass-card scroll-animate bg-interactive" id="resources">
+                <h2>AI 相关资源 / AI Related Resources</h2>
+                <p>以下是一些常见的 AI 相关官网链接，方便您快速访问</p>
+                <p>Here are some common AI-related official website links for your quick access</p>
+                <div class="links-container">
+                    <a href="https://jimeng.jianying.com/" target="_blank" class="link-item scroll-animate">即梦 AI / Jimeng AI</a>
+                    <a href="https://openai.com" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.1s;">OpenAI</a>
+                    <a href="https://ai.google" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.2s;">Google AI</a>
+                    <a href="https://www.anthropic.com" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.3s;">Anthropic</a>
+                    <a href="https://comfy.org" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.4s;">Comfy</a>
+                    <a href="https://tapnow.ai" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.5s;">TapNow</a>
+                    <a href="https://lovart.ai" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.6s;">Lovart AI</a>
                 </div>
             </div>
         </div>
-    </section>
-    
-    <!-- 作品展示 -->
-    <section class="gallery" id="gallery">
-        <div class="container">
-            <h2 class="scroll-animate">作品展示 / Gallery</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item glass-card scroll-animate">
-                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=beautiful%20landscape%20with%20mountains%20and%20lake%20created%20by%20AI&image_size=square_hd" alt="AI Generated Landscape" class="gallery-image">
-                    <h3>AI 生成风景</h3>
-                    <p>使用 ComfyUI 生成的自然风景作品</p>
-                </div>
-                <div class="gallery-item glass-card scroll-animate">
-                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=futuristic%20city%20skyline%20with%20flying%20cars%20created%20by%20AI&image_size=square_hd" alt="AI Generated City" class="gallery-image">
-                    <h3>未来城市</h3>
-                    <p>AI 生成的未来城市景观</p>
-                </div>
-                <div class="gallery-item glass-card scroll-animate">
-                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=abstract%20digital%20art%20with%20vibrant%20colors%20created%20by%20AI&image_size=square_hd" alt="AI Generated Art" class="gallery-image">
-                    <h3>抽象艺术</h3>
-                    <p>AI 生成的抽象数字艺术作品</p>
-                </div>
-                <div class="gallery-item glass-card scroll-animate">
-                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=portrait%20of%20a%20person%20with%20artistic%20style%20created%20by%20AI&image_size=square_hd" alt="AI Generated Portrait" class="gallery-image">
-                    <h3>人物肖像</h3>
-                    <p>AI 生成的艺术风格人物肖像</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- 联系我们 -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2 class="scroll-animate">联系我们 / Contact Us</h2>
-            <div class="contact-content">
-                <div class="contact-info glass-card scroll-animate">
-                    <h3>联系方式</h3>
-                    <p><i class="fas fa-envelope"></i> Boss@sometab.com</p>
-                    <p><i class="fas fa-map-marker-alt"></i> 北京市朝阳区</p>
-                    <p><i class="fas fa-phone"></i> +86 123 4567 8910</p>
-                </div>
-                <div class="contact-form glass-card scroll-animate">
-                    <h3>发送消息</h3>
-                    <form id="contact-form">
-                        <div class="form-group">
-                            <label for="name">姓名 / Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">邮箱 / Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">消息 / Message</label>
-                            <textarea id="message" name="message" rows="4" required></textarea>
-                        </div>
-                        <button type="submit" class="btn">发送 / Send</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
     
     <!-- 页脚 -->
-    <footer>
+    <footer class="scroll-animate">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-logo">
+                <div class="footer-section scroll-animate">
                     <h3>ComfyUI</h3>
-                    <p>AI 驱动的创意平台</p>
+                    <p>AI 驱动的创意工具，为您的创作提供无限可能。</p>
+                    <p>AI-driven creative tools, providing unlimited possibilities for your creation.</p>
                 </div>
-                <div class="footer-links">
-                    <h4>快速链接</h4>
-                    <ul>
-                        <li><a href="#home">首页</a></li>
-                        <li><a href="#features">特色</a></li>
-                        <li><a href="#ecosystem">生态</a></li>
-                        <li><a href="#gallery">作品展示</a></li>
-                        <li><a href="#contact">联系我们</a></li>
-                    </ul>
+                <div class="footer-section scroll-animate" style="transition-delay: 0.2s;">
+                    <h3>快速链接 / Quick Links</h3>
+                    <a href="#home">首页 / Home</a><br>
+                    <a href="#features">社区生态门户 / Community Portal</a><br>
+                    <a href="#contact">联系我们 / Contact</a><br>
+                    <a href="#resources">AI 资源 / AI Resources</a>
                 </div>
-                <div class="footer-social">
-                    <h4>关注我们</h4>
-                    <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-weixin"></i></a>
-                    </div>
+                <div class="footer-section scroll-animate" style="transition-delay: 0.4s;">
+                    <h3>联系我们 / Contact Us</h3>
+                    <p>邮箱: Boss@sometab.com</p>
+                    <p>Email: Boss@sometab.com</p>
                 </div>
             </div>
-            <div class="footer-bottom">
+            <div class="footer-bottom scroll-animate" style="transition-delay: 0.6s;">
                 <p>&copy; 2026 ComfyUI. 保留所有权利。</p>
+                <p>&copy; 2026 ComfyUI. All rights reserved.</p>
             </div>
         </div>
     </footer>
-    
-    <script>
-        // 移动端菜单切换
-        document.getElementById('menu-toggle').addEventListener('click', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
-        });
-        
-        // 滚动动画
-        function handleScrollAnimation() {
-            const elements = document.querySelectorAll('.scroll-animate');
-            elements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                if (elementTop < windowHeight - 100) {
-                    element.classList.add('active');
-                }
-            });
-        }
-        
-        // 初始检查
-        handleScrollAnimation();
-        
-        // 滚动时检查
-        window.addEventListener('scroll', handleScrollAnimation);
-        
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                    // 关闭移动端菜单
-                    document.getElementById('mobile-menu').classList.add('hidden');
-                }
-            });
-        });
-        
-        // 表单提交
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('消息已发送！我们会尽快回复您。');
-            this.reset();
-        });
-    </script>
 </body>
 </html>
