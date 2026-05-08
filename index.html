@@ -1096,11 +1096,41 @@
             });
         }
         
+        // 获取访问计数
+        function loadVisitorCount() {
+            const counterElement = document.getElementById('visitor-counter');
+            if (!counterElement) return;
+            
+            // 使用countapi.xyz服务
+            fetch('https://api.countapi.xyz/hit/comfyui.sometab.com/visits')
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.value !== undefined) {
+                        counterElement.textContent = data.value.toLocaleString();
+                    }
+                })
+                .catch(error => {
+                    console.log('Failed to load visitor count:', error);
+                    // 使用本地存储作为备用
+                    let count = localStorage.getItem('comfyui_visitor_count');
+                    if (count) {
+                        count = parseInt(count) + 1;
+                    } else {
+                        count = 1;
+                    }
+                    localStorage.setItem('comfyui_visitor_count', count.toString());
+                    counterElement.textContent = count.toLocaleString();
+                });
+        }
+        
         // 滚动时触发动画
         window.addEventListener('scroll', handleScrollAnimation);
         
-        // 初始化锚点链接处理
-        window.addEventListener('DOMContentLoaded', handleAnchorLinks);
+        // 初始化锚点链接处理和访问计数
+        window.addEventListener('DOMContentLoaded', function() {
+            handleAnchorLinks();
+            loadVisitorCount();
+        });
     </script>
 </head>
 <body>
@@ -1211,11 +1241,10 @@
                 <p>&copy; 2026 ComfyUI. 保留所有权利。</p>
                 <p>&copy; 2026 ComfyUI. All rights reserved.</p>
             </div>
-            <div class="visitor-count scroll-animate" style="transition-delay: 0.8s; text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-                <p style="font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 10px;">累计访问 / Total Visits</p>
-                <a href="https://visitor-badge.laobi.icu/badge?page_id=comfyui.sometab.page" title="累计访问次数" target="_blank" style="text-decoration: none;">
-                    <img src="https://visitor-badge.laobi.icu/badge?page_id=comfyui.sometab.page" alt="Visitors" style="opacity: 0.6; transition: all 0.3s ease;" onmouseover="this.style.opacity='1.0'" onmouseout="this.style.opacity='0.6'">
-                </a>
+            <div class="visitor-count" style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.15);">
+                <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 12px;">累计访问 / Total Visits</p>
+                <div id="visitor-counter" style="color: rgba(255,255,255,0.75); font-size: 1.5rem; font-weight: 600; font-family: 'Monaco', 'Consolas', monospace;">--</div>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 8px;">统计服务: countapi.xyz</p>
             </div>
         </div>
     </footer>
