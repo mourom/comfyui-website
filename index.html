@@ -1101,12 +1101,12 @@
             const counterElement = document.getElementById('visitor-counter');
             if (!counterElement) return;
             
-            // 使用countapi.xyz服务
-            fetch('https://api.countapi.xyz/hit/comfyui.sometab.com/visits')
+            // 使用counterapi.dev服务
+            fetch('https://api.counterapi.dev/v1/comfyui.com/visits/up')
                 .then(response => response.json())
                 .then(data => {
-                    if (data && data.value !== undefined) {
-                        counterElement.textContent = data.value.toLocaleString();
+                    if (data && data.count !== undefined) {
+                        counterElement.textContent = data.count.toLocaleString();
                     }
                 })
                 .catch(error => {
