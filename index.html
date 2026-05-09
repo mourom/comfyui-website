@@ -243,12 +243,18 @@
             overflow: hidden;
         }
         
+        header .container {
+            position: relative;
+            z-index: 10;
+        }
+        
         /* === Header 科技感 HUD 背景 === */
+        /* 层级规范：header-bg=0, header-circle=1, header-text=2, geo-deco/geo-dyn=3, container(文字内容)=10 */
         .header-bg {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(160deg, #0a0a12 0%, #12101e 40%, #0d1117 100%);
-            z-index: -4;
+            z-index: 0;
             overflow: hidden;
         }
         
@@ -258,6 +264,7 @@
             border-radius: 50%;
             border-style: solid;
             pointer-events: none;
+            z-index: 1;
         }
         
         .header-circle.c1 {
@@ -317,7 +324,7 @@
         .geo-deco {
             position: absolute;
             pointer-events: none;
-            z-index: -2;
+            z-index: 3;
         }
         
         .geo-deco.g1 {
@@ -391,7 +398,7 @@
         @keyframes geo-float-dot { 0%, 100% { transform: translateY(0); opacity: 0.35; } 50% { transform: translateY(-15px); opacity: 0.85; } }
         
         /* 动态几何装饰 */
-        .geo-dyn { position: absolute; pointer-events: none; z-index: -2; }
+        .geo-dyn { position: absolute; pointer-events: none; z-index: 3; }
         @keyframes gd-float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(5deg); } }
         @keyframes gd-blink { 0%, 100% { opacity: 0.2; } 30%, 70% { opacity: 1; } }
         @keyframes gd-glide { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(12px); } }
@@ -413,7 +420,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             opacity: 0.08;
-            z-index: -2;
+            z-index: 2;
             pointer-events: none;
             user-select: none;
             white-space: nowrap;
