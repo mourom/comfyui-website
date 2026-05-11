@@ -1,3 +1,7 @@
+---
+alwaysApply: false
+description: 
+---
 我现在有一个百度云BCC云服务器
 基本信息
 区域： 华北 - 北京，可用区D  ID： i-og9DNEFP  状态： 运行中 实例名称： sometab   主机名： sometab  类型： e2 描述： 无   实例释放保护： 关闭  服务组件：  
