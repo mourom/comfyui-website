@@ -883,7 +883,24 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
         }
         
-
+        /* AI 资源子分类 */
+        .ai-subcategory {
+            margin-top: 32px;
+        }
+        
+        .ai-subcategory:first-of-type {
+            margin-top: 0;
+        }
+        
+        .ai-subcategory-title {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
         
         /* 页脚样式 */
         footer {
@@ -1521,13 +1538,36 @@
                 <h2>AI 相关资源 / AI Related Resources</h2>
                 <p>以下是一些常见的 AI 相关官网链接，方便您快速访问</p>
                 <p>Here are some common AI-related official website links for your quick access</p>
-                <div class="links-container">
-                    <a href="https://jimeng.jianying.com/ai-tool/home" target="_blank" class="link-item scroll-animate">即梦 AI / Jimeng AI</a>
-                    <a href="https://chatgpt.com" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.1s;">OpenAI</a>
-                    <a href="https://gemini.google.com/app" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.2s;">Google AI</a>
-                    <a href="https://claude.ai/login" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.3s;">Anthropic</a>
-                    <a href="https://app.tapnow.ai/home" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.4s;">TapNow</a>
-                    <a href="https://lovart.ai" target="_blank" class="link-item scroll-animate" style="transition-delay: 0.6s;">Lovart AI</a>
+
+                <div class="ai-subcategory">
+                    <h3 class="ai-subcategory-title">🧠 AI 大语言模型 / LLM</h3>
+                    <div class="links-container">
+                        <a href="https://chatgpt.com" target="_blank" class="link-item scroll-animate">OpenAI</a>
+                        <a href="https://gemini.google.com/app" target="_blank" class="link-item scroll-animate">Google AI</a>
+                        <a href="https://claude.ai/login" target="_blank" class="link-item scroll-animate">Anthropic</a>
+                        <a href="https://chat.deepseek.com/" target="_blank" class="link-item scroll-animate">DeepSeek</a>
+                        <a href="https://chat.z.ai/" target="_blank" class="link-item scroll-animate">Z AI</a>
+                        <a href="https://www.kimi.com/" target="_blank" class="link-item scroll-animate">Kimi</a>
+                        <a href="https://www.doubao.com/chat/" target="_blank" class="link-item scroll-animate">豆包 / Doubao</a>
+                        <a href="https://grok.com/" target="_blank" class="link-item scroll-animate">Grok</a>
+                        <a href="https://agent.minimaxi.com/" target="_blank" class="link-item scroll-animate">MiniMax</a>
+                    </div>
+                </div>
+
+                <div class="ai-subcategory">
+                    <h3 class="ai-subcategory-title">🎨 AI 图像与设计 / Image & Design</h3>
+                    <div class="links-container">
+                        <a href="https://jimeng.jianying.com/ai-tool/home" target="_blank" class="link-item scroll-animate">即梦 AI / Jimeng AI</a>
+                        <a href="https://lovart.ai" target="_blank" class="link-item scroll-animate">Lovart AI</a>
+                        <a href="https://app.runwayml.com/video-tools/teams/guest/ai-tools/generate?tool=video&mode=tools" target="_blank" class="link-item scroll-animate">Runway</a>
+                    </div>
+                </div>
+
+                <div class="ai-subcategory">
+                    <h3 class="ai-subcategory-title">🛠️ AI 工具平台 / Tool Platform</h3>
+                    <div class="links-container">
+                        <a href="https://app.tapnow.ai/home" target="_blank" class="link-item scroll-animate">TapNow</a>
+                    </div>
                 </div>
             </div>
             
