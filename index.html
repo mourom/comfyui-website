@@ -785,20 +785,13 @@
         window.addEventListener('DOMContentLoaded', () => {
             const counter = document.getElementById('visitor-counter');
             if (!counter) return;
-            fetch('https://api.counterapi.dev/v2/team-4181/comfyui-visits/up', {
-                headers: { 'Authorization': 'Bearer ut_su4ADFr65A3uUhmRjwus3ep2cA7VNkF923fCRrmq' }
+            fetch('https://lmolokzzzzzkyxyqrduq.supabase.co/rest/v1/rpc/increment_counter', {
+                method: 'POST',
+                headers: { 'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxtb2xva3p6enp6a3l4eXFyZHVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyODE4NTgsImV4cCI6MjA5NDg1Nzg1OH0.xNu4fOQSigt5jqv9FRMPu7nL5Hxy29yw6butustsXLI', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxtb2xva3p6enp6a3l4eXFyZHVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyODE4NTgsImV4cCI6MjA5NDg1Nzg1OH0.xNu4fOQSigt5jqv9FRMPu7nL5Hxy29yw6butustsXLI', 'Content-Type': 'application/json' }
             })
-                .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-                .then(data => {
-                    const upCount = data?.data?.up_count ?? data?.count;
-                    if (upCount !== undefined) counter.textContent = (30572 + upCount).toLocaleString();
-                })
-                .catch(err => {
-                    fetch('https://api.counterapi.dev/v1/comfyui.com/visits/up')
-                        .then(r => r.json())
-                        .then(data => { if (data?.count !== undefined) counter.textContent = data.count.toLocaleString(); })
-                        .catch(() => {});
-                });
+                .then(r => r.json())
+                .then(data => { if (data) counter.textContent = data.toLocaleString(); })
+                .catch(() => {});
         });
     </script>
 </head>
