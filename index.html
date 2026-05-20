@@ -788,12 +788,17 @@
             fetch('https://api.counterapi.dev/v2/team-4181/comfyui-visits/up', {
                 headers: { 'Authorization': 'Bearer ut_su4ADFr65A3uUhmRjwus3ep2cA7VNkF923fCRrmq' }
             })
-                .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+                .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
                 .then(data => {
                     const upCount = data?.data?.up_count ?? data?.count;
                     if (upCount !== undefined) counter.textContent = (30572 + upCount).toLocaleString();
                 })
-                .catch(() => {});
+                .catch(err => {
+                    fetch('https://api.counterapi.dev/v1/comfyui.com/visits/up')
+                        .then(r => r.json())
+                        .then(data => { if (data?.count !== undefined) counter.textContent = data.count.toLocaleString(); })
+                        .catch(() => {});
+                });
         });
     </script>
 </head>
