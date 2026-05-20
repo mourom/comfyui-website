@@ -784,16 +784,30 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             const counter = document.getElementById('visitor-counter');
-            if (counter) {
-                fetch('https://api.counterapi.dev/v1/comfyui.com/visits/up')
-                    .then(r => r.json())
-                    .then(data => { if (data?.count !== undefined) counter.textContent = data.count.toLocaleString(); })
-                    .catch(() => {
-                        let count = parseInt(localStorage.getItem('comfyui_visitor_count') || '0') + 1;
-                        localStorage.setItem('comfyui_visitor_count', count.toString());
-                        counter.textContent = count.toLocaleString();
-                    });
+            if (!counter) return;
+            const endpoints = [
+                'https://api.counterapi.dev/v1/comfyui.com/visits/up',
+                'https://api.counterapi.dev/v2/comfyui.com/visits/up'
+            ];
+            let idx = 0;
+            function tryFetch() {
+                if (idx >= endpoints.length) {
+                    let count = parseInt(localStorage.getItem('comfyui_visitor_count') || '0') + 1;
+                    localStorage.setItem('comfyui_visitor_count', count.toString());
+                    counter.textContent = count.toLocaleString();
+                    return;
+                }
+                fetch(endpoints[idx])
+                    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+                    .then(data => {
+                        if (data?.count !== undefined) {
+                            counter.textContent = data.count.toLocaleString();
+                            localStorage.setItem('comfyui_visitor_count', data.count.toString());
+                        } else throw new Error('no count');
+                    })
+                    .catch(() => { idx++; tryFetch(); });
             }
+            tryFetch();
         });
     </script>
 </head>
