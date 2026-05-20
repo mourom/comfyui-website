@@ -785,30 +785,15 @@
         window.addEventListener('DOMContentLoaded', () => {
             const counter = document.getElementById('visitor-counter');
             if (!counter) return;
-            const COUNTER_KEY = 'ut_su4ADFr65A3uUhmRjwus3ep2cA7VNkF923fCRrmq';
-            const strategies = [
-                () => fetch('https://api.counterapi.dev/v2/comfyui.com/visits/up', { headers: { 'Authorization': 'Bearer ' + COUNTER_KEY } }),
-                () => fetch('https://api.counterapi.dev/v1/comfyui.com/visits/up')
-            ];
-            let idx = 0;
-            function tryFetch() {
-                if (idx >= strategies.length) {
-                    let count = parseInt(localStorage.getItem('comfyui_visitor_count') || '0') + 1;
-                    localStorage.setItem('comfyui_visitor_count', count.toString());
-                    counter.textContent = count.toLocaleString();
-                    return;
-                }
-                strategies[idx]()
-                    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-                    .then(data => {
-                        if (data?.count !== undefined) {
-                            counter.textContent = data.count.toLocaleString();
-                            localStorage.setItem('comfyui_visitor_count', data.count.toString());
-                        } else throw new Error('no count');
-                    })
-                    .catch(() => { idx++; tryFetch(); });
-            }
-            tryFetch();
+            fetch('https://api.counterapi.dev/v2/team-4181/comfyui-visits/up', {
+                headers: { 'Authorization': 'Bearer ut_su4ADFr65A3uUhmRjwus3ep2cA7VNkF923fCRrmq' }
+            })
+                .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+                .then(data => {
+                    const upCount = data?.data?.up_count ?? data?.count;
+                    if (upCount !== undefined) counter.textContent = (30572 + upCount).toLocaleString();
+                })
+                .catch(() => {});
         });
     </script>
 </head>
