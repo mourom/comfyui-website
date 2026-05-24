@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <script data-cfasync="false" src="https://cmp.gatekeeperconsent.com/min.js"></script>
+    <script data-cfasync="false" src="https://the.gatekeeperconsent.com/cmp.min.js"></script>
+    <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
+    <script>
+        window.ezstandalone = window.ezstandalone || {};
+        ezstandalone.cmd = ezstandalone.cmd || [];
+    </script>
+    <script src="//ezoicanalytics.com/analytics.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ComfyUI</title>
@@ -624,6 +632,36 @@
             transition: all 0.3s ease;
             z-index: -1;
         }
+
+        .ezoic-anchor-ad {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            z-index: 9998;
+            display: flex;
+            justify-content: center;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 6px 0;
+        }
+
+        .ezoic-side-ad {
+            position: fixed;
+            top: 80px;
+            width: 160px;
+            height: 600px;
+            z-index: 9997;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .ezoic-side-ad-left { left: 8px; }
+        .ezoic-side-ad-right { right: 8px; }
+
+        @media (max-width: 1400px) {
+            .ezoic-side-ad { display: none; }
+        }
     </style>
     <script>
         function handleScrollAnimation() {
@@ -942,5 +980,23 @@
             </div>
         </div>
     </footer>
+
+    <div class="ezoic-side-ad ezoic-side-ad-left">
+        <div id="ezoic-pub-ad-placeholder-101"></div>
+    </div>
+
+    <div class="ezoic-side-ad ezoic-side-ad-right">
+        <div id="ezoic-pub-ad-placeholder-102"></div>
+    </div>
+
+    <div class="ezoic-anchor-ad">
+        <div id="ezoic-pub-ad-placeholder-103"></div>
+    </div>
+
+    <script>
+        ezstandalone.cmd.push(function () {
+            ezstandalone.showAds(101, 102, 103);
+        });
+    </script>
 </body>
 </html>
