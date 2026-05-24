@@ -8,8 +8,19 @@
         window.ezstandalone = window.ezstandalone || {};
         ezstandalone.cmd = ezstandalone.cmd || [];
     </script>
-    <script src="//ezoicanalytics.com/analytics.js"></script>
+    <script async src="//ezoicanalytics.com/analytics.js"></script>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google.com">
+    <link rel="preconnect" href="//www.googlesyndication.com">
+    <link rel="dns-prefetch" href="//www.ezojs.com">
+    <link rel="preconnect" href="//ezoicanalytics.com">
+    <link rel="dns-prefetch" href="//cmp.gatekeeperconsent.com">
+    <link rel="preconnect" href="//the.gatekeeperconsent.com">
+    <link rel="preconnect" href="//lmolokzzzzzkyxyqrduq.supabase.co">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ComfyUI</title>
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -174,6 +185,7 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            contain: layout style;
         }
 
         header > *:not(.header-bg):not(.header-circle):not(.geo-deco):not(.geo-dyn):not(.header-text) {
@@ -602,6 +614,7 @@
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            contain: inline-size;
         }
 
         .scroll-animate.animate {
@@ -620,6 +633,7 @@
             transition: all 0.2s ease-out;
             mix-blend-mode: screen;
             backdrop-filter: blur(10px);
+            contain: strict;
         }
 
         .bg-interactive { position: relative; }
@@ -643,6 +657,7 @@
             backdrop-filter: blur(12px);
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             padding: 6px 0;
+            min-height: 50px;
         }
 
         .ezoic-side-ad {
@@ -750,7 +765,7 @@
                 }
             ];
 
-            for (let i = 0; i < 18; i++) {
+            for (let i = 0; i < 8; i++) {
                 const el = shapes[Math.floor(Math.random() * shapes.length)]();
                 el.style.position = 'absolute';
                 el.style.pointerEvents = 'none';
@@ -976,7 +991,7 @@
             </div>
             <div class="visitor-count" style="text-align: center; margin-top: var(--sp-md); padding-top: var(--sp-sm); border-top: 1px solid rgba(255,255,255,0.1);">
                 <span style="font-size: var(--fs-sm); color: rgba(232,232,236,0.3);">累计访问 / Total Visits</span>
-                <span id="visitor-counter" style="color: rgba(232,232,236,0.3); font-size: var(--fs-sm); font-weight: 600; font-family: 'Monaco', 'Consolas', monospace; margin-left: 8px;">--</span>
+                <span id="visitor-counter" style="color: rgba(232,232,236,0.3); font-size: var(--fs-sm); font-weight: 600; font-family: 'Monaco', 'Consolas', monospace; margin-left: 8px; display: inline-block; min-width: 4ch;">--</span>
             </div>
         </div>
     </footer>
