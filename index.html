@@ -1,30 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ========== [广告] Ezoic 隐私脚本 (CMP 同意管理 / Privacy Scripts) ========== -->
-    <script data-cfasync="false" src="https://cmp.gatekeeperconsent.com/min.js"></script>
-    <script data-cfasync="false" src="https://the.gatekeeperconsent.com/cmp.min.js"></script>
-    <!-- ========== [/广告] Ezoic 隐私脚本 ========== -->
-
-    <!-- ========== [广告] Ezoic 头部脚本 (广告系统初始化 / Header Script) ========== -->
-    <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
-    <script>
-        window.ezstandalone = window.ezstandalone || {};
-        ezstandalone.cmd = ezstandalone.cmd || [];
-    </script>
-    <script async src="//ezoicanalytics.com/analytics.js"></script>
-    <!-- ========== [/广告] Ezoic 头部脚本 ========== -->
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="//www.google.com">
     <link rel="preconnect" href="//www.googlesyndication.com">
-    <!-- ========== [广告] Ezoic 域名预连接 (Preconnect) ========== -->
-    <link rel="dns-prefetch" href="//www.ezojs.com">
-    <link rel="preconnect" href="//ezoicanalytics.com">
-    <link rel="dns-prefetch" href="//cmp.gatekeeperconsent.com">
-    <link rel="preconnect" href="//the.gatekeeperconsent.com">
-    <!-- ========== [/广告] Ezoic 域名预连接 ========== -->
     <link rel="preconnect" href="//lmolokzzzzzkyxyqrduq.supabase.co">
     <!-- ========== [广告] Adsterra 域名预连接 (EffectiveCPMNetwork / Preconnect) ========== -->
     <link rel="preconnect" href="//pl29537044.effectivecpmnetwork.com">
@@ -696,39 +677,6 @@
             transition: all 0.3s ease;
             z-index: -1;
         }
-
-        /* ========== [广告] Ezoic 广告位样式 (底部锚点 + 侧边固定 / Anchor + Side Sticky) ========== */
-        .ezoic-anchor-ad {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            z-index: 9998;
-            display: flex;
-            justify-content: center;
-            background: rgba(10, 10, 15, 0.95);
-            backdrop-filter: blur(12px);
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 6px 0;
-            min-height: 50px;
-        }
-
-        .ezoic-side-ad {
-            position: fixed;
-            top: 80px;
-            width: 160px;
-            height: 600px;
-            z-index: 9997;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-        }
-
-        .ezoic-side-ad-left { left: 8px; }
-        .ezoic-side-ad-right { right: 8px; }
-
-        @media (max-width: 1400px) {
-            .ezoic-side-ad { display: none; }
-        }
-        /* ========== [/广告] Ezoic 广告位样式 ========== */
     </style>
     <script>
         function handleScrollAnimation() {
@@ -1045,25 +993,5 @@
             </div>
         </div>
     </footer>
-
-    <!-- ========== [广告] Ezoic 广告位 (左侧边:101 / 右侧边:102 / 底部锚点:103) ========== -->
-    <div class="ezoic-side-ad ezoic-side-ad-left">
-        <div id="ezoic-pub-ad-placeholder-101"></div>
-    </div>
-
-    <div class="ezoic-side-ad ezoic-side-ad-right">
-        <div id="ezoic-pub-ad-placeholder-102"></div>
-    </div>
-
-    <div class="ezoic-anchor-ad">
-        <div id="ezoic-pub-ad-placeholder-103"></div>
-    </div>
-
-    <script>
-        ezstandalone.cmd.push(function () {
-            ezstandalone.showAds(101, 102, 103);
-        });
-    </script>
-    <!-- ========== [/广告] Ezoic 广告位 ========== -->
 </body>
 </html>
